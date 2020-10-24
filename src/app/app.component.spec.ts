@@ -1,31 +1,28 @@
-import { TestBed } from '@angular/core/testing';
+import { Shallow } from 'shallow-render';
 import { AppComponent } from './app.component';
+import { AppModule } from './app.module';
 
 describe('AppComponent', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
-      ],
-    }).compileComponents();
+  let shallow: Shallow<AppComponent>;
+
+  beforeEach(() => {
+    shallow = new Shallow(AppComponent, AppModule);
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+  it('should create the app', async () => {
+    const rendered = await shallow.render();
+    expect(rendered).toBeTruthy();
   });
 
-  it(`should have as title 'shallow-mask'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('shallow-mask');
+  it(`should have as title 'shallow-mask'`, async () => {
+    const { instance } = await shallow.render();
+    expect(instance.title).toEqual('shallow-mask');
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('shallow-mask app is running!');
+  it('should render title', async () => {
+    const { find } = await shallow.render();
+    expect(find('#title').nativeElement.textContent).toContain(
+      'shallow-mask app is running!'
+    );
   });
 });
