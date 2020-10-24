@@ -15,7 +15,7 @@
     }
   },
   "lint-staged": {
-    "*.{js,css,md}": "prettier --write"
+    "*.{ts,js,json,css,html,md}": "prettier --write"
   },
   "private": true,
   "dependencies": {
